@@ -1,0 +1,106 @@
+﻿@model List<HospitalGame.Models.Ranking>
+@*<div>
+    @if (Model != null)
+    {
+        <ul>
+            @foreach (var ape in Model)
+            {
+                <li><label>Nombre: </label>@ape.Nombre </li>
+            }
+        </ul>
+    }
+</div>*@
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<style>
+    .toggler {
+        width: 500px;
+        height: 200px;
+    }
+
+    #button {
+        padding: .5em 1em;
+        text-decoration: none;
+    }
+
+    #effect {
+        width: 240px;
+        height:auto;
+        padding: 0.4em;
+        position: relative;
+    }
+
+        #effect h3 {
+            margin: 0;
+            padding: 0.4em;
+            text-align: center;
+        }
+</style>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+
+    $(document).load(function () {
+        $("#button").click();
+    });
+
+    $(function () {
+        // run the currently selected effect
+        function runEffect() {
+            // get effect type from
+            var selectedEffect = $("#effectTypes").val();
+
+            // Most effect types need no options passed by default
+            var options = {};
+            // some effects have required parameters
+            if (selectedEffect === "scale") {
+                options = { percent: 50 };
+            } else if (selectedEffect === "size") {
+                options = { to: { width: 280, height: 185 } };
+            }
+
+            // Run the effect
+            $("#effect").show(selectedEffect, options, 500, callback);
+        };
+
+        //callback function to bring a hidden box back
+        function callback() {
+            setTimeout(function () {
+                $("#effect:visible").removeAttr("style").fadeOut();
+            }, 1000);
+        };
+
+        // Set effect from select menu value
+        $("#button").on("click", function () {
+            runEffect();
+        });
+
+        $("#effect").hide();
+    });
+
+</script>
+
+<div class="toggler">
+    <div id="effect" class="ui-widget-content ui-corner-all">
+        <h3 class="ui-widget-header ui-corner-all">Ranking</h3>
+        <div>
+            @if (Model != null)
+            {
+                <ul>
+                    @foreach (var ape in Model)
+                    {
+                        <li><label>Nombre: </label>@ape.Nombre </li>
+                    }
+                </ul>
+            }
+        </div>
+    </div>
+</div>
+
+<select name="effects" id="effectTypes">
+    
+    <option value="bounce">Bounce</option>
+ 
+</select>
+
+<button id="button" class="ui-state-default ui-corner-all">Run Effect</button>
